@@ -372,6 +372,54 @@ body.focus .main{margin-left:0;max-width:none;}
   .hero{padding:22px;}
   .type-pick{grid-template-columns:1fr 1fr 1fr;}
 }
+/* ---------- Rubriques d’enseignements (grandes cartes + photo facultative) ---------- */
+.sec-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:10px 0 14px;}
+.sec-head h2{font-size:21px;}
+.sec-head .muted{display:inline-flex;align-items:center;gap:6px;}
+.sec-head .muted svg{width:15px;height:15px;}
+.cat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px;margin-bottom:34px;}
+.cat-tile{position:relative;aspect-ratio:4/3;border-radius:18px;overflow:hidden;cursor:pointer;border:1px solid var(--border-strong);background:var(--bg-card);isolation:isolate;transition:transform var(--tr),border-color var(--tr),box-shadow var(--tr);}
+.cat-tile:hover,.cat-tile:focus-visible{transform:translateY(-3px);border-color:var(--gold);box-shadow:var(--shadow-card);}
+.cat-cover{position:absolute;inset:0;z-index:-2;overflow:hidden;}
+.cat-cover img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease;}
+.cat-tile:hover .cat-cover img{transform:scale(1.05);}
+.cat-cover .cat-art{position:absolute;right:-6%;top:-8%;width:62%;height:62%;color:var(--tone);opacity:.3;stroke-width:1.1;transform:rotate(-10deg);}
+.cat-cover.tone-0{--tone:#E8B52C;background:repeating-linear-gradient(135deg,rgba(255,255,255,.025) 0 2px,transparent 2px 16px),radial-gradient(circle at 85% 12%,rgba(232,181,44,.55),transparent 58%),linear-gradient(150deg,#2A2410,#0A1230 75%);}
+.cat-cover.tone-1{--tone:#F7D46A;background:repeating-linear-gradient(135deg,rgba(255,255,255,.025) 0 2px,transparent 2px 16px),radial-gradient(circle at 85% 12%,rgba(247,212,106,.55),transparent 58%),linear-gradient(150deg,#2C2714,#0A1230 75%);}
+.cat-cover.tone-2{--tone:#7D9DEB;background:repeating-linear-gradient(135deg,rgba(255,255,255,.025) 0 2px,transparent 2px 16px),radial-gradient(circle at 85% 12%,rgba(91,127,217,.55),transparent 58%),linear-gradient(150deg,#132457,#0A1230 75%);}
+.cat-cover.tone-3{--tone:#E8B52C;background:repeating-linear-gradient(135deg,rgba(255,255,255,.025) 0 2px,transparent 2px 16px),radial-gradient(circle at 85% 12%,rgba(232,181,44,.55),transparent 58%),linear-gradient(150deg,#03060E,#0A1230 75%);}
+.cat-cover.tone-4{--tone:#A9BDF0;background:repeating-linear-gradient(135deg,rgba(255,255,255,.025) 0 2px,transparent 2px 16px),radial-gradient(circle at 85% 12%,rgba(143,168,232,.55),transparent 58%),linear-gradient(150deg,#1A2A58,#0A1230 75%);}
+.cat-cover.tone-5{--tone:#D9A52A;background:repeating-linear-gradient(135deg,rgba(255,255,255,.025) 0 2px,transparent 2px 16px),radial-gradient(circle at 85% 12%,rgba(201,154,30,.55),transparent 58%),linear-gradient(150deg,#1F1A08,#0A1230 75%);}
+.cat-shade{position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(0,0,0,0) 28%,rgba(0,0,0,.8));}
+.cat-info{position:absolute;left:0;right:0;bottom:0;padding:16px 18px;}
+.cat-icon{width:40px;height:40px;border-radius:12px;background:rgba(0,0,0,.38);border:1px solid rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;color:var(--gold-light);margin-bottom:10px;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);}
+.cat-info h3{font-size:21px;line-height:1.2;color:#fff;text-shadow:0 2px 12px rgba(0,0,0,.55);}
+.cat-meta{font-size:12.5px;color:rgba(255,255,255,.8);margin-top:5px;}
+.cat-photo-btn{position:absolute;top:10px;right:10px;width:38px;height:38px;border-radius:50%;border:1px solid rgba(255,255,255,.28);background:rgba(0,0,0,.45);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);transition:background var(--tr),color var(--tr),transform var(--tr);}
+.cat-photo-btn:hover{background:var(--gold);border-color:var(--gold);color:var(--bg);transform:scale(1.08);}
+.cat-new{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;border:1.5px dashed var(--border-strong);background:transparent;color:var(--text-secondary);font-weight:600;}
+.cat-new svg{width:28px;height:28px;}
+.cat-new:hover{color:var(--gold-light);}
+.cat-hero{position:relative;min-height:240px;border-radius:22px;overflow:hidden;margin-bottom:22px;display:flex;align-items:flex-end;isolation:isolate;border:1px solid var(--border-strong);}
+.cat-hero .cat-cover .cat-art{width:46%;height:120%;right:-4%;top:-20%;}
+.cat-hero .cat-shade{background:linear-gradient(180deg,rgba(0,0,0,.05) 10%,rgba(0,0,0,.82));}
+.cat-hero-body{padding:26px 28px;width:100%;}
+.cat-hero h1{font-size:36px;line-height:1.15;color:#fff;text-shadow:0 2px 14px rgba(0,0,0,.5);}
+.cat-hero .cat-meta{font-size:14px;}
+@media (max-width:640px){
+  .cat-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-bottom:26px;}
+  .cat-tile{aspect-ratio:1/1;border-radius:14px;}
+  .cat-info{padding:10px 12px;}
+  .cat-info h3{font-size:15.5px;}
+  .cat-icon{width:30px;height:30px;border-radius:9px;margin-bottom:6px;}
+  .cat-icon svg{width:16px;height:16px;}
+  .cat-meta{font-size:11px;}
+  .cat-photo-btn{width:32px;height:32px;top:7px;right:7px;}
+  .cat-photo-btn svg{width:16px;height:16px;}
+  .cat-hero{min-height:200px;border-radius:16px;}
+  .cat-hero-body{padding:18px;}
+  .cat-hero h1{font-size:26px;}
+}
 @media print{
   body{background:#fff;color:#111;}
   .sidebar,.bottom-nav,.no-print,.toast-wrap{display:none!important;}
@@ -439,7 +487,8 @@ const FEEDBACK_URL = '';
 const STORE_KEY = 'pamg_meditons_v1';   // clé propre à l’édition de l’Église
 const OLD_KEY = '';                      // pas de reprise des données de l’app de base
 const BIBLE_DB = 'pamg_bibles';
-const APP_VERSION = '1.0';
+const APP_VERSION = '1.1';
+const PHOTO_DB = 'pamg_photos';       // photos des rubriques d’enseignements (IndexedDB)
 
 /* ---------- Livres de la Bible : [code, nom, testament, abréviations] ---------- */
 const BOOKS = [
@@ -755,6 +804,7 @@ const ICONS = {
   users:'<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7"/><path d="M18 14a5.5 5.5 0 0 1 3.5 6"/>',
   mic:'<rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0 0 14 0"/><path d="M12 18v4M8 22h8"/>',
   link:'<path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/>',
+  camera:'<path d="M3 8.5A2.5 2.5 0 0 1 5.5 6h1.8l1.5-2h6.4l1.5 2h1.8A2.5 2.5 0 0 1 21 8.5v9a2.5 2.5 0 0 1-2.5 2.5h-13A2.5 2.5 0 0 1 3 17.5z"/><circle cx="12" cy="12.8" r="3.6"/>',
   folder:'<path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>',
   trophy:'<path d="M8 21h8M12 17v4"/><path d="M7 4h10v5a5 5 0 0 1-10 0z"/><path d="M17 5h3v2a3 3 0 0 1-3 3M7 5H4v2a3 3 0 0 0 3 3"/>',
   chart:'<path d="M3 3v18h18"/><path d="M7 15v3M12 10v8M17 6v12"/>',
@@ -956,6 +1006,41 @@ const IDB = {
   put(v) { return new Promise((res, rej) => { if (!this.db) return rej(new Error('Stockage indisponible')); const r = this.tx('readwrite').put(v); r.onsuccess = () => res(); r.onerror = () => rej(r.error); }); },
   del(id) { return new Promise(res => { if (!this.db) return res(); const r = this.tx('readwrite').delete(id); r.onsuccess = r.onerror = () => res(); }); }
 };
+
+/* ---------- Photos des rubriques d’enseignements (IndexedDB) ---------- */
+const Photos = {
+  db: null, urls: {},
+  open() {
+    return new Promise((res) => {
+      if (!('indexedDB' in window)) return res(null);
+      try {
+        const rq = indexedDB.open(PHOTO_DB, 1);
+        rq.onupgradeneeded = () => rq.result.createObjectStore('photos', {keyPath: 'id'});
+        rq.onsuccess = () => { this.db = rq.result; res(this.db); };
+        rq.onerror = () => res(null);
+      } catch (e) { res(null); }
+    });
+  },
+  tx(mode) { return this.db.transaction('photos', mode).objectStore('photos'); },
+  load() { return this.open().then(() => new Promise(res => { if (!this.db) return res(0); const r = this.tx('readonly').getAll(); r.onsuccess = () => { (r.result || []).forEach(p => { if (p && p.id && p.data) this.urls[p.id] = p.data; }); res((r.result || []).length); }; r.onerror = () => res(0); })); },
+  set(id, data) { this.urls[id] = data; return new Promise(res => { if (!this.db) return res(false); const r = this.tx('readwrite').put({id, data, at: Date.now()}); r.onsuccess = () => res(true); r.onerror = () => res(false); }); },
+  del(id) { delete this.urls[id]; return new Promise(res => { if (!this.db) return res(); const r = this.tx('readwrite').delete(id); r.onsuccess = r.onerror = () => res(); }); },
+  clear() { this.urls = {}; return new Promise(res => { if (!this.db) return res(); const r = this.tx('readwrite').clear(); r.onsuccess = r.onerror = () => res(); }); }
+};
+/* Réduit une photo (max 1280 px) pour qu’elle reste légère sur l’appareil */
+function resizeImage(file, max = 1280, quality = .82) {
+  return new Promise((res, rej) => {
+    const url = URL.createObjectURL(file), img = new Image();
+    img.onload = () => {
+      const k = Math.min(1, max / Math.max(img.naturalWidth, img.naturalHeight)), c = document.createElement('canvas');
+      c.width = Math.max(1, Math.round(img.naturalWidth * k)); c.height = Math.max(1, Math.round(img.naturalHeight * k));
+      c.getContext('2d').drawImage(img, 0, 0, c.width, c.height); URL.revokeObjectURL(url);
+      res(c.toDataURL('image/jpeg', quality));
+    };
+    img.onerror = () => { URL.revokeObjectURL(url); rej(new Error('Image illisible')); };
+    img.src = url;
+  });
+}
 
 /* =====================================================================
    État de l’application (localStorage)
@@ -1669,24 +1754,65 @@ function filteredTeachings() {
     (!q || norm([t.title, t.speaker, t.body, (t.tags || []).join(' '), (t.refs || []).join(' ')].join(' ')).includes(q))
   ).sort((a, b) => (b.date || '').localeCompare(a.date || '') || b.createdAt - a.createdAt);
 }
+/* Couleur par défaut de chaque rubrique (quand il n’y a pas de photo) */
+const CAT_TONES = {ecrits: 0, videos: 3, cultes: 1, seminaires: 2, conferences: 4, worship: 5, evangelisation: 1};
+const catTone = id => CAT_TONES[id] ?? [...String(id)].reduce((h, ch) => (h * 31 + ch.charCodeAt(0)) % 6, 0);
+const catCoverHTML = c => Photos.urls[c.id]
+  ? `<div class="cat-cover has-photo"><img src="${Photos.urls[c.id]}" alt=""></div>`
+  : `<div class="cat-cover tone-${catTone(c.id)}">${ic(c.icon || 'folder', 'i cat-art')}</div>`;
+function catTileHTML(c) {
+  const n = S.teachings.filter(t => t.catId === c.id).length, todo = S.teachings.filter(t => t.catId === c.id && !t.watched).length, hasPhoto = !!Photos.urls[c.id];
+  return `<div class="cat-tile" data-action="teach-cat" data-cat="${c.id}" role="button" tabindex="0" aria-label="${esc(c.name)}">${catCoverHTML(c)}<div class="cat-shade"></div>
+    <button class="cat-photo-btn" data-action="cat-photo" data-cat="${c.id}" title="${hasPhoto ? 'Changer la photo' : 'Ajouter une photo'}" aria-label="${hasPhoto ? 'Changer la photo' : 'Ajouter une photo'}">${ic('camera')}</button>
+    <div class="cat-info"><div class="cat-icon">${ic(c.icon || 'folder')}</div><h3>${esc(c.name)}</h3><div class="cat-meta">${n ? plural(n, 'enseignement') : 'Vide pour l’instant'}${todo ? ` · ${todo} à voir` : ''}</div></div></div>`;
+}
 VIEWS.teach = () => {
   const T = UI.teach;
   if (T.detail) { const t = S.teachings.find(x => x.id === T.detail); if (t) return teachDetailHTML(t); T.detail = null; }
   const list = filteredTeachings();
   const count = f => S.teachings.filter(f).length;
-  return `<div class="view-head"><div><div class="eyebrow">Grandir dans la foi</div><h1>Enseignements</h1><p class="subtitle">Textes, vidéos YouTube, cultes, séminaires et conférences, classés comme tu le souhaites.</p></div>
-    <div class="row"><button class="btn btn-secondary" data-action="manage-cats">${ic('folder')} Catégories</button><button class="btn btn-primary" data-action="add-teach">${ic('plus')} Ajouter</button></div></div>
-  <div class="row" style="margin-bottom:14px;flex-wrap:nowrap"><div class="ref-box" style="flex:1">${ic('search', 'i ref-ico')}<input class="input" style="padding-left:44px" id="teach-search" placeholder="Rechercher un titre, un orateur, un thème, un passage…" value="${esc(T.q)}"></div>
-    <select class="select" style="width:auto" data-change="teach-type"><option value="all">Tous les formats</option><option value="text" ${T.type === 'text' ? 'selected' : ''}>Écrits</option><option value="video" ${T.type === 'video' ? 'selected' : ''}>Vidéos</option><option value="link" ${T.type === 'link' ? 'selected' : ''}>Liens</option></select></div>
-  <div class="cat-strip">
-    <button class="chip ${T.cat === 'all' ? 'is-active' : ''}" data-action="teach-cat" data-cat="all">Tout <span class="count">${S.teachings.length}</span></button>
+  const cat = S.teachingCats.find(c => c.id === T.cat);
+  const search = `<div class="row" style="margin-bottom:14px;flex-wrap:nowrap"><div class="ref-box" style="flex:1">${ic('search', 'i ref-ico')}<input class="input" style="padding-left:44px" id="teach-search" placeholder="Rechercher un titre, un orateur, un thème, un passage…" value="${esc(T.q)}"></div>
+    <select class="select" style="width:auto" data-change="teach-type"><option value="all">Tous les formats</option><option value="text" ${T.type === 'text' ? 'selected' : ''}>Écrits</option><option value="video" ${T.type === 'video' ? 'selected' : ''}>Vidéos</option><option value="link" ${T.type === 'link' ? 'selected' : ''}>Liens</option></select></div>`;
+  const quick = `<button class="chip ${T.cat === 'all' ? 'is-active' : ''}" data-action="teach-cat" data-cat="all">Tout <span class="count">${S.teachings.length}</span></button>
     <button class="chip ${T.cat === 'fav' ? 'is-active' : ''}" data-action="teach-cat" data-cat="fav">${ic('star')} Favoris <span class="count">${count(t => t.favorite)}</span></button>
-    <button class="chip ${T.cat === 'todo' ? 'is-active' : ''}" data-action="teach-cat" data-cat="todo">${ic('clock')} À voir <span class="count">${count(t => !t.watched)}</span></button>
+    <button class="chip ${T.cat === 'todo' ? 'is-active' : ''}" data-action="teach-cat" data-cat="todo">${ic('clock')} À voir <span class="count">${count(t => !t.watched)}</span></button>`;
+  const allChips = `<div class="cat-strip">${quick}
     ${S.teachingCats.map(c => `<button class="chip ${T.cat === c.id ? 'is-active' : ''}" data-action="teach-cat" data-cat="${c.id}">${ic(c.icon || 'folder')} ${esc(c.name)} <span class="count">${count(t => t.catId === c.id)}</span></button>`).join('')}
-    <button class="chip" data-action="add-cat">${ic('plus')} Catégorie</button>
-  </div>
+    <button class="chip" data-action="add-cat">${ic('plus')} Rubrique</button></div>`;
+  // Une rubrique ouverte : grande bannière (photo ou couleur), puis ses enseignements
+  if (cat) {
+    const n = count(t => t.catId === cat.id), hasPhoto = !!Photos.urls[cat.id];
+    return `<button class="btn-back" data-action="teach-cat" data-cat="all">${ic('arrowL')} Toutes les rubriques</button>
+  <div class="cat-hero">${catCoverHTML(cat)}<div class="cat-shade"></div>
+    <div class="cat-hero-body"><div class="cat-icon">${ic(cat.icon || 'folder')}</div><div class="eyebrow" style="color:var(--gold-light)">Rubrique</div><h1>${esc(cat.name)}</h1><p class="cat-meta">${n ? plural(n, 'enseignement') : 'Aucun enseignement pour l’instant'}</p>
+      <div class="row" style="margin-top:16px"><button class="btn btn-primary" data-action="add-teach">${ic('plus')} Ajouter ici</button><button class="btn btn-secondary" data-action="cat-photo" data-cat="${cat.id}">${ic('camera')} ${hasPhoto ? 'Changer la photo' : 'Ajouter une photo'}</button>${hasPhoto ? `<button class="btn btn-ghost" data-action="cat-photo-del" data-cat="${cat.id}">${ic('trash')} Retirer la photo</button>` : ''}</div></div></div>
+  ${search}${allChips}
+  <div id="teach-grid">${teachGridHTML(list)}</div>`;
+  }
+  const head = `<div class="view-head"><div><div class="eyebrow">Grandir dans la foi</div><h1>Enseignements</h1><p class="subtitle">Textes, vidéos YouTube, cultes, séminaires et conférences, classés par rubrique.</p></div>
+    <div class="row"><button class="btn btn-secondary" data-action="manage-cats">${ic('folder')} Rubriques</button><button class="btn btn-primary" data-action="add-teach">${ic('plus')} Ajouter</button></div></div>`;
+  // Favoris ou « À voir » : la liste filtrée
+  if (T.cat !== 'all') return `${head}${search}${allChips}<div id="teach-grid">${teachGridHTML(list)}</div>`;
+  // Accueil des enseignements : les rubriques en grand, puis tous les enseignements
+  return `${head}${search}
+  <div class="sec-head"><h2>Rubriques</h2><span class="muted" style="font-size:12.5px">${ic('camera')} Touche l’appareil photo pour mettre une image</span></div>
+  <div class="cat-grid">${S.teachingCats.map(catTileHTML).join('')}<div class="cat-tile cat-new" data-action="add-cat" role="button" tabindex="0">${ic('plus')}<span>Nouvelle rubrique</span></div></div>
+  <div class="sec-head"><h2>Tous les enseignements</h2></div>
+  <div class="cat-strip">${quick}</div>
   <div id="teach-grid">${teachGridHTML(list)}</div>`;
 };
+function pickCatPhoto(id) {
+  const inp = document.createElement('input');
+  inp.type = 'file'; inp.accept = 'image/*'; inp.className = 'hidden';
+  document.body.appendChild(inp);
+  inp.addEventListener('change', async () => {
+    const f = inp.files && inp.files[0]; inp.remove(); if (!f) return;
+    try { const kept = await Photos.set(id, await resizeImage(f)); render(); toast(kept ? 'Photo ajoutée' : 'Photo ajoutée pour cette session (stockage indisponible)'); }
+    catch (e) { toast('Impossible de lire cette image. Essaie une photo JPG ou PNG.'); }
+  });
+  inp.click();
+}
 function teachGridHTML(list) {
   if (!list.length) {
     const c = S.teachingCats.find(x => x.id === UI.teach.cat);
@@ -1708,6 +1834,7 @@ function teachCardHTML(t) {
 const hostOf = u => { try { return new URL(u).hostname.replace(/^www\./, ''); } catch (e) { return 'Lien'; } };
 const readTime = s => Math.max(1, Math.round(String(s || '').split(/\s+/).length / 200));
 AFTER.teach = () => {
+  $$('.cat-tile').forEach(t => t.addEventListener('keydown', e => { if ((e.key === 'Enter' || e.key === ' ') && e.target === t) { e.preventDefault(); t.click(); } }));
   const inp = $('#teach-search');
   if (inp) inp.addEventListener('input', debounce(() => { UI.teach.q = inp.value; $('#teach-grid').innerHTML = teachGridHTML(filteredTeachings()); }, 150));
   const notes = $('#teach-notes');
@@ -1752,7 +1879,7 @@ function teachForm(t) {
   openModal({title: isNew ? 'Nouvel enseignement' : 'Modifier l’enseignement', wide: true,
     body: `<div class="field"><label class="label">Format</label><div class="type-pick">
         <button class="type-opt" data-type="video">${ic('video')} Vidéo YouTube</button><button class="type-opt" data-type="text">${ic('book')} Écrit</button><button class="type-opt" data-type="link">${ic('link')} Autre lien</button></div></div>
-      <div class="grid-2" style="gap:14px"><div class="field"><label class="label">Catégorie</label><select class="select" id="tf-cat">${S.teachingCats.map(c => `<option value="${c.id}" ${c.id === t.catId ? 'selected' : ''}>${esc(c.name)}</option>`).join('')}<option value="__new">+ Nouvelle catégorie…</option></select></div>
+      <div class="grid-2" style="gap:14px"><div class="field"><label class="label">Rubrique</label><select class="select" id="tf-cat">${S.teachingCats.map(c => `<option value="${c.id}" ${c.id === t.catId ? 'selected' : ''}>${esc(c.name)}</option>`).join('')}<option value="__new">+ Nouvelle rubrique…</option></select></div>
         <div class="field"><label class="label">Date</label><input class="input" type="date" id="tf-date" value="${esc(t.date || '')}"></div></div>
       <div class="field" id="tf-url-wrap"><label class="label" id="tf-url-label">Lien YouTube</label><input class="input" id="tf-url" placeholder="https://www.youtube.com/watch?v=…" value="${esc(t.url || '')}"><div id="tf-preview"></div></div>
       <div class="field"><label class="label">Titre *</label><input class="input" id="tf-title" value="${esc(t.title)}" placeholder="Ex. : La foi qui déplace les montagnes"></div>
@@ -1777,7 +1904,7 @@ function teachForm(t) {
       };
       $$('.type-opt', m).forEach(b => b.addEventListener('click', () => setType(b.dataset.type)));
       $('#tf-url').addEventListener('input', preview);
-      $('#tf-cat').addEventListener('change', e => { if (e.target.value === '__new') { const n = prompt('Nom de la nouvelle catégorie :'); if (n && n.trim()) { const c = addCategory(n.trim()); e.target.insertAdjacentHTML('afterbegin', `<option value="${c.id}">${esc(c.name)}</option>`); e.target.value = c.id; } else e.target.value = S.teachingCats[0].id; } });
+      $('#tf-cat').addEventListener('change', e => { if (e.target.value === '__new') { const n = prompt('Nom de la nouvelle rubrique :'); if (n && n.trim()) { const c = addCategory(n.trim()); e.target.insertAdjacentHTML('afterbegin', `<option value="${c.id}">${esc(c.name)}</option>`); e.target.value = c.id; } else e.target.value = S.teachingCats[0].id; } });
       setType(type);
       $('#tf-save').addEventListener('click', () => {
         const title = $('#tf-title').value.trim(), url = $('#tf-url').value.trim();
@@ -1795,9 +1922,9 @@ function teachForm(t) {
 }
 function addCategory(name) { const c = {id: 'c' + uid(), name, icon: 'folder', builtin: false}; S.teachingCats.push(c); save(); return c; }
 function manageCats() {
-  const body = () => `<div class="list" id="cat-list">${S.teachingCats.map(c => `<div class="row" style="padding:8px 0;border-bottom:1px solid var(--border);flex-wrap:nowrap"><span style="color:var(--gold)">${ic(c.icon || 'folder')}</span><input class="input" data-cat-name="${c.id}" value="${esc(c.name)}"><span class="muted" style="font-size:12px;white-space:nowrap">${S.teachings.filter(t => t.catId === c.id).length} élém.</span><button class="btn btn-ghost btn-icon" data-cat-up="${c.id}" title="Monter">↑</button><button class="btn btn-ghost btn-icon" data-cat-del="${c.id}" title="Supprimer">${ic('trash')}</button></div>`).join('')}</div>
-    <div class="row" style="margin-top:16px;flex-wrap:nowrap"><input class="input" id="new-cat" placeholder="Nouvelle catégorie (ex. : Études bibliques, Louange, Jeunesse…)"><button class="btn btn-primary" id="add-cat-btn">${ic('plus')} Ajouter</button></div>`;
-  openModal({title: 'Catégories d’enseignements', body: body(), foot: `<button class="btn btn-primary" data-action="close-modal">Terminé</button>`,
+  const body = () => `<div class="list" id="cat-list">${S.teachingCats.map(c => `<div class="row" style="padding:8px 0;border-bottom:1px solid var(--border);flex-wrap:nowrap"><span style="color:var(--gold)">${ic(c.icon || 'folder')}</span><input class="input" data-cat-name="${c.id}" value="${esc(c.name)}"><span class="muted" style="font-size:12px;white-space:nowrap">${S.teachings.filter(t => t.catId === c.id).length} élém.</span><button class="btn btn-ghost btn-icon" data-action="cat-photo" data-cat="${c.id}" title="${Photos.urls[c.id] ? 'Changer la photo' : 'Ajouter une photo'}">${ic('camera')}</button><button class="btn btn-ghost btn-icon" data-cat-up="${c.id}" title="Monter">↑</button><button class="btn btn-ghost btn-icon" data-cat-del="${c.id}" title="Supprimer">${ic('trash')}</button></div>`).join('')}</div>
+    <div class="row" style="margin-top:16px;flex-wrap:nowrap"><input class="input" id="new-cat" placeholder="Nouvelle rubrique (ex. : Études bibliques, Louange, Jeunesse…)"><button class="btn btn-primary" id="add-cat-btn">${ic('plus')} Ajouter</button></div>`;
+  openModal({title: 'Rubriques d’enseignements', body: body(), foot: `<button class="btn btn-primary" data-action="close-modal">Terminé</button>`,
     onMount: m => {
       const refresh = () => { m.querySelector('.modal-body').innerHTML = body(); };
       m.addEventListener('input', e => { const id = e.target.dataset.catName; if (id) { const c = S.teachingCats.find(x => x.id === id); c.name = e.target.value; saveSoon(); } });
@@ -1806,12 +1933,12 @@ function manageCats() {
         if (e.target.closest('#add-cat-btn')) { const v = $('#new-cat').value.trim(); if (v) { addCategory(v); refresh(); } }
         else if (up) { const i = S.teachingCats.findIndex(c => c.id === up.dataset.catUp); if (i > 0) { [S.teachingCats[i - 1], S.teachingCats[i]] = [S.teachingCats[i], S.teachingCats[i - 1]]; save(); refresh(); } }
         else if (del) {
-          if (S.teachingCats.length <= 1) return toast('Il faut garder au moins une catégorie.');
+          if (S.teachingCats.length <= 1) return toast('Il faut garder au moins une rubrique.');
           const id = del.dataset.catDel, n = S.teachings.filter(t => t.catId === id).length;
           const target = S.teachingCats.find(c => c.id !== id);
-          if (n && !confirm(`Cette catégorie contient ${n} enseignement(s). Ils seront déplacés dans « ${target.name} ». Continuer ?`)) return;
+          if (n && !confirm(`Cette rubrique contient ${n} enseignement(s). Ils seront déplacés dans « ${target.name} ». Continuer ?`)) return;
           S.teachings.forEach(t => { if (t.catId === id) t.catId = target.id; });
-          S.teachingCats = S.teachingCats.filter(c => c.id !== id); if (UI.teach.cat === id) UI.teach.cat = 'all';
+          S.teachingCats = S.teachingCats.filter(c => c.id !== id); if (UI.teach.cat === id) UI.teach.cat = 'all'; Photos.del(id);
           save(); refresh();
         }
       });
@@ -2219,7 +2346,9 @@ const ACTIONS = {
   'teach-cat': el => { UI.teach.cat = el.dataset.cat; render(); },
   'add-teach': () => teachForm(null),
   'edit-teach': el => teachForm(S.teachings.find(t => t.id === el.dataset.id)),
-  'add-cat': () => { const n = prompt('Nom de la nouvelle catégorie (ex. : Études bibliques, Louange, Jeunesse) :'); if (n && n.trim()) { const c = addCategory(n.trim()); UI.teach.cat = c.id; render(); toast('Catégorie créée'); } },
+  'add-cat': () => { const n = prompt('Nom de la nouvelle rubrique (ex. : Études bibliques, Louange, Jeunesse) :'); if (n && n.trim()) { const c = addCategory(n.trim()); UI.teach.cat = c.id; render(); toast('Rubrique créée'); } },
+  'cat-photo': el => pickCatPhoto(el.dataset.cat),
+  'cat-photo-del': el => confirmBox('Retirer la photo de cette rubrique ?', async () => { await Photos.del(el.dataset.cat); render(); toast('Photo retirée'); }, 'Retirer'),
   'manage-cats': () => manageCats(),
   'open-teach': el => { UI.teach.detail = el.dataset.id; go('teach'); },
   'teach-back': () => { UI.teach.detail = null; render(); },
@@ -2253,7 +2382,7 @@ const ACTIONS = {
   'del-version': el => confirmBox('Retirer cette version de la Bible de l’app ?', async () => { const id = el.dataset.id; delete Bible.versions[id]; delete Bible.searchIndex[id]; await IDB.del(id); if (S.settings.version === id) S.settings.version = 'LSG'; if (S.settings.compare === id) S.settings.compare = null; save(); render(); }, 'Retirer'),
   'dl-version': el => downloadVersion(el.dataset.id),
   'export-data': () => download(`sauvegarde-meditons-pamg-${iso()}.json`, JSON.stringify(S, null, 1)),
-  'reset-all': () => confirmBox('Tout effacer ? Cette action est irréversible. Pense à exporter une sauvegarde avant.', () => { S = defaultState(); save(); applyFont(); go('home'); toast('Application réinitialisée'); }, 'Tout effacer')
+  'reset-all': () => confirmBox('Tout effacer ? Cette action est irréversible. Pense à exporter une sauvegarde avant.', () => { S = defaultState(); save(); Photos.clear(); applyFont(); go('home'); toast('Application réinitialisée'); }, 'Tout effacer')
 };
 
 const CHANGES = {
@@ -2328,6 +2457,7 @@ function init() {
     vs.forEach(v => { if (v && v.id && v.books) Bible.versions[v.id] = v; });
     if (vs.length && ['settings', 'bible'].includes(UI.view)) render();
   });
+  Photos.load().then(n => { if (n && UI.view === 'teach') render(); });
   checkReminder(); setInterval(checkReminder, 60000);
 }
 document.addEventListener('DOMContentLoaded', init);
