@@ -1,0 +1,18 @@
+{
+  "name": "Méditons Ensemble · Pray and Move Generation",
+  "short_name": "PAMG Méditons",
+  "description": "Pray and Move Generation · Méditer la Bible chaque jour, avec un coach : méthode guidée, Bible intégrée, enseignements et défis.",
+  "lang": "fr",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0A1230",
+  "theme_color": "#0A1230",
+  "categories": ["lifestyle", "education", "books"],
+  "icons": [
+    {"src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any"},
+    {"src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any"},
+    {"src": "icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable"}
+  ]
+}
