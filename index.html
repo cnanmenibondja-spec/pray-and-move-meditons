@@ -377,7 +377,8 @@ body.focus .main{margin-left:0;max-width:none;}
 .sec-head h2{font-size:21px;}
 .sec-head .muted{display:inline-flex;align-items:center;gap:6px;}
 .sec-head .muted svg{width:15px;height:15px;}
-.cat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px;margin-bottom:34px;}
+.cat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px;margin-bottom:20px;}
+#teach-grid:not(:empty){margin-bottom:28px;}
 .cat-tile{position:relative;aspect-ratio:4/3;border-radius:18px;overflow:hidden;cursor:pointer;border:1px solid var(--border-strong);background:var(--bg-card);isolation:isolate;transition:transform var(--tr),border-color var(--tr),box-shadow var(--tr);}
 .cat-tile:hover,.cat-tile:focus-visible{transform:translateY(-3px);border-color:var(--gold);box-shadow:var(--shadow-card);}
 .cat-cover{position:absolute;inset:0;z-index:-2;overflow:hidden;}
@@ -487,7 +488,7 @@ const FEEDBACK_URL = '';
 const STORE_KEY = 'pamg_meditons_v1';   // clé propre à l’édition de l’Église
 const OLD_KEY = '';                      // pas de reprise des données de l’app de base
 const BIBLE_DB = 'pamg_bibles';
-const APP_VERSION = '1.1';
+const APP_VERSION = '1.2';
 const PHOTO_DB = 'pamg_photos';       // photos des rubriques d’enseignements (IndexedDB)
 
 /* ---------- Livres de la Bible : [code, nom, testament, abréviations] ---------- */
@@ -1774,8 +1775,7 @@ VIEWS.teach = () => {
   const cat = S.teachingCats.find(c => c.id === T.cat);
   const search = `<div class="row" style="margin-bottom:14px;flex-wrap:nowrap"><div class="ref-box" style="flex:1">${ic('search', 'i ref-ico')}<input class="input" style="padding-left:44px" id="teach-search" placeholder="Rechercher un titre, un orateur, un thème, un passage…" value="${esc(T.q)}"></div>
     <select class="select" style="width:auto" data-change="teach-type"><option value="all">Tous les formats</option><option value="text" ${T.type === 'text' ? 'selected' : ''}>Écrits</option><option value="video" ${T.type === 'video' ? 'selected' : ''}>Vidéos</option><option value="link" ${T.type === 'link' ? 'selected' : ''}>Liens</option></select></div>`;
-  const quick = `<button class="chip ${T.cat === 'all' ? 'is-active' : ''}" data-action="teach-cat" data-cat="all">Tout <span class="count">${S.teachings.length}</span></button>
-    <button class="chip ${T.cat === 'fav' ? 'is-active' : ''}" data-action="teach-cat" data-cat="fav">${ic('star')} Favoris <span class="count">${count(t => t.favorite)}</span></button>
+  const quick = `<button class="chip ${T.cat === 'fav' ? 'is-active' : ''}" data-action="teach-cat" data-cat="fav">${ic('star')} Favoris <span class="count">${count(t => t.favorite)}</span></button>
     <button class="chip ${T.cat === 'todo' ? 'is-active' : ''}" data-action="teach-cat" data-cat="todo">${ic('clock')} À voir <span class="count">${count(t => !t.watched)}</span></button>`;
   const allChips = `<div class="cat-strip">${quick}
     ${S.teachingCats.map(c => `<button class="chip ${T.cat === c.id ? 'is-active' : ''}" data-action="teach-cat" data-cat="${c.id}">${ic(c.icon || 'folder')} ${esc(c.name)} <span class="count">${count(t => t.catId === c.id)}</span></button>`).join('')}
@@ -1794,13 +1794,12 @@ VIEWS.teach = () => {
     <div class="row"><button class="btn btn-secondary" data-action="manage-cats">${ic('folder')} Rubriques</button><button class="btn btn-primary" data-action="add-teach">${ic('plus')} Ajouter</button></div></div>`;
   // Favoris ou « À voir » : la liste filtrée
   if (T.cat !== 'all') return `${head}${search}${allChips}<div id="teach-grid">${teachGridHTML(list)}</div>`;
-  // Accueil des enseignements : les rubriques en grand, puis tous les enseignements
+  // Accueil des enseignements : seulement les rubriques (leur contenu s’ouvre au clic) ; les résultats n’apparaissent que pendant une recherche
   return `${head}${search}
+  <div id="teach-grid">${T.q.trim() ? teachGridHTML(list) : ''}</div>
   <div class="sec-head"><h2>Rubriques</h2><span class="muted" style="font-size:12.5px">${ic('camera')} Touche l’appareil photo pour mettre une image</span></div>
   <div class="cat-grid">${S.teachingCats.map(catTileHTML).join('')}<div class="cat-tile cat-new" data-action="add-cat" role="button" tabindex="0">${ic('plus')}<span>Nouvelle rubrique</span></div></div>
-  <div class="sec-head"><h2>Tous les enseignements</h2></div>
-  <div class="cat-strip">${quick}</div>
-  <div id="teach-grid">${teachGridHTML(list)}</div>`;
+  <div class="cat-strip">${quick}</div>`;
 };
 function pickCatPhoto(id) {
   const inp = document.createElement('input');
@@ -1836,7 +1835,7 @@ const readTime = s => Math.max(1, Math.round(String(s || '').split(/\s+/).length
 AFTER.teach = () => {
   $$('.cat-tile').forEach(t => t.addEventListener('keydown', e => { if ((e.key === 'Enter' || e.key === ' ') && e.target === t) { e.preventDefault(); t.click(); } }));
   const inp = $('#teach-search');
-  if (inp) inp.addEventListener('input', debounce(() => { UI.teach.q = inp.value; $('#teach-grid').innerHTML = teachGridHTML(filteredTeachings()); }, 150));
+  if (inp) inp.addEventListener('input', debounce(() => { UI.teach.q = inp.value; $('#teach-grid').innerHTML = UI.teach.cat === 'all' && !inp.value.trim() ? '' : teachGridHTML(filteredTeachings()); }, 150));
   const notes = $('#teach-notes');
   if (notes) notes.addEventListener('input', () => { const t = S.teachings.find(x => x.id === UI.teach.detail); if (t) { t.notes = notes.value; saveSoon(); } });
 };
@@ -1914,7 +1913,7 @@ function teachForm(t) {
         if (type === 'link' && !/^https?:\/\//i.test(url)) return toast('Le lien doit commencer par http:// ou https://');
         const refs = $('#tf-refs').value.split(/;|\n/).map(s => s.trim()).filter(Boolean).map(s => { const r = parseRef(s); return r && r.hasChapter ? Bible.label(r) : s; });
         const data = {type, catId: $('#tf-cat').value, date: $('#tf-date').value, url: type === 'text' ? '' : url, videoId, title, speaker: $('#tf-speaker').value.trim(), body: $('#tf-body').value, refs, tags: $('#tf-tags').value.split(',').map(s => s.trim()).filter(Boolean)};
-        if (isNew) { const nt = {id: uid(), createdAt: Date.now(), favorite: false, watched: false, notes: '', quiz: [], ...data}; S.teachings.push(nt); UI.teach.detail = null; toast('Enseignement ajouté'); }
+        if (isNew) { const nt = {id: uid(), createdAt: Date.now(), favorite: false, watched: false, notes: '', quiz: [], ...data}; S.teachings.push(nt); UI.teach.detail = null; UI.teach.cat = nt.catId; toast('Enseignement ajouté'); }
         else { Object.assign(S.teachings.find(x => x.id === t.id), data); toast('Enseignement mis à jour'); }
         save(); closeModal(); render();
       });
