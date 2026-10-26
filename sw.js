@@ -1,5 +1,5 @@
 /* Méditons Ensemble · Pray and Move Generation — service worker (fonctionnement hors connexion) */
-const VERSION = '1.5';
+const VERSION = '1.6';
 const CACHE = 'pamg-med-' + VERSION;
 const SHELL = ['./', './index.html', './manifest.webmanifest', './icons/icon-192.png', './icons/icon-512.png', './icons/icon-maskable-512.png', './icons/apple-touch-icon.png'];
 
