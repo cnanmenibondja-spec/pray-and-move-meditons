@@ -928,7 +928,7 @@ const FEEDBACK_URL = '';
 const STORE_KEY = 'pamg_meditons_v1';   // clé propre à l’édition de l’Église
 const OLD_KEY = '';                      // pas de reprise des données de l’app de base
 const BIBLE_DB = 'pamg_bibles';
-const APP_VERSION = '1.6';
+const APP_VERSION = '1.7';
 const PHOTO_DB = 'pamg_photos';       // photos des rubriques d’enseignements (IndexedDB)
 
 /* ---------- Livres de la Bible : [code, nom, testament, abréviations] ---------- */
@@ -3271,9 +3271,15 @@ let deferredInstall = null;
 const isStandalone = () => (window.matchMedia && matchMedia('(display-mode: standalone)').matches) || navigator.standalone === true;
 const isIOS = () => /iphone|ipad|ipod/i.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
 const isOnline = () => /^https?:$/.test(location.protocol);
-const canOfferInstall = () => isOnline() && !isStandalone() && (deferredInstall || isIOS());
+/* v3.1 : sur Android, seul Chrome installe une application que Google Play Protect accepte.
+   Samsung Internet (et les autres navigateurs) fabriquent leur propre paquet, que Play Protect bloque
+   (« Appli non sécurisée bloquée »). Dans ces navigateurs, on ne lance pas leur installation : on propose d'ouvrir Chrome. */
+const isAndroid = () => /android/i.test(navigator.userAgent);
+const isAndroidOther = () => isAndroid() && (/SamsungBrowser|EdgA|OPR\/|Firefox|YaBrowser|MiuiBrowser|HuaweiBrowser|HeyTapBrowser|UCBrowser|DuckDuckGo|; wv\)/i.test(navigator.userAgent) || !/Chrome\//.test(navigator.userAgent) || !!navigator.brave);
+const chromeLink = () => 'intent://' + location.host + location.pathname + '#Intent;scheme=https;package=com.android.chrome;S.browser_fallback_url=' + encodeURIComponent('https://play.google.com/store/apps/details?id=com.android.chrome') + ';end';
+const canOfferInstall = () => isOnline() && !isStandalone() && (deferredInstall || isIOS() || isAndroidOther());
 
-window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); deferredInstall = e; if (['home', 'settings'].includes(UI.view)) render(); });
+window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); if (isAndroidOther()) return; deferredInstall = e; if (['home', 'settings'].includes(UI.view)) render(); });
 window.addEventListener('appinstalled', () => { deferredInstall = null; toast(tr('Méditons Ensemble est installée sur ton appareil', 'Méditons Ensemble is installed on your device')); });
 
 function installBanner() {
@@ -3285,9 +3291,11 @@ function installHelp() {
   openModal({title: tr('Installer l’application', 'Install the app'), body: ios
     ? tr(`<ol class="prose" style="padding-left:20px;font-size:15px"><li>Ouvre cette page dans <b>Safari</b>.</li><li>Touche le bouton <b>Partager</b> (le carré avec une flèche vers le haut).</li><li>Choisis <b>« Sur l’écran d’accueil »</b>, puis <b>Ajouter</b>.</li></ol><p class="help">L’icône Méditons Ensemble apparaîtra sur ton écran d’accueil.</p>`,
       `<ol class="prose" style="padding-left:20px;font-size:15px"><li>Open this page in <b>Safari</b>.</li><li>Tap the <b>Share</b> button (the square with an arrow pointing up).</li><li>Choose <b>“Add to Home Screen”</b>, then <b>Add</b>.</li></ol><p class="help">The Méditons Ensemble icon will appear on your home screen.</p>`)
+    : isAndroidOther() ? tr(`<p class="prose" style="font-size:15px">Sur Android, installe l’application avec <b>Google Chrome</b>. Avec ce navigateur-ci (par exemple Samsung Internet), Google Play Protect peut afficher <b>« Appli non sécurisée bloquée »</b>.</p><p class="help">Si tu as vu ce message : touche <b>OK</b>. Rien n’a été installé et ton téléphone ne risque rien.</p><ol class="prose" style="padding-left:20px;font-size:15px"><li>Touche <b>« Ouvrir dans Chrome »</b> ci-dessous.</li><li>Dans Chrome, ouvre le menu <b>⋮</b> en haut à droite.</li><li>Choisis <b>« Installer l’application »</b> (ou « Ajouter à l’écran d’accueil »), puis <b>Installer</b>.</li></ol><p class="help">Tes méditations déjà notées restent dans ce navigateur-ci. Pour les garder, fais d’abord <b>Plus › Paramètres › Sauvegarde › Exporter</b>, puis importe le fichier dans l’application installée.</p>`,
+      `<p class="prose" style="font-size:15px">On Android, install the app with <b>Google Chrome</b>. With this browser (for example Samsung Internet), Google Play Protect may show <b>“Unsafe app blocked”</b>.</p><p class="help">If you saw that message: tap <b>OK</b>. Nothing was installed and your phone is safe.</p><ol class="prose" style="padding-left:20px;font-size:15px"><li>Tap <b>“Open in Chrome”</b> below.</li><li>In Chrome, open the <b>⋮</b> menu at the top right.</li><li>Choose <b>“Install app”</b> (or “Add to Home screen”), then <b>Install</b>.</li></ol><p class="help">Meditations you already wrote stay in this browser. To keep them, first use <b>More › Settings › Backup › Export</b>, then import the file in the installed app.</p>`)
     : tr(`<ol class="prose" style="padding-left:20px;font-size:15px"><li>Ouvre cette page dans <b>Chrome</b> ou <b>Edge</b>.</li><li>Ouvre le menu <b>⋮</b> en haut à droite.</li><li>Choisis <b>« Installer l’application »</b> ou <b>« Ajouter à l’écran d’accueil »</b>.</li></ol>`,
       `<ol class="prose" style="padding-left:20px;font-size:15px"><li>Open this page in <b>Chrome</b> or <b>Edge</b>.</li><li>Open the <b>⋮</b> menu at the top right.</li><li>Choose <b>“Install app”</b> or <b>“Add to Home screen”</b>.</li></ol>`),
-    foot: `<button class="btn btn-primary" data-action="close-modal">${tr('Compris', 'Got it')}</button>`});
+    foot: (isAndroidOther() && !ios ? `<a class="btn btn-primary" href="${esc(chromeLink())}">${tr('Ouvrir dans Chrome', 'Open in Chrome')}</a><button class="btn btn-secondary" data-action="close-modal">${tr('Fermer', 'Close')}</button>` : `<button class="btn btn-primary" data-action="close-modal">${tr('Compris', 'Got it')}</button>`)});
 }
 
 /* ---------- Avis ---------- */
@@ -3316,7 +3324,7 @@ function openFeedback() {
 }
 
 Object.assign(ACTIONS, {
-  'install-app': async () => { if (deferredInstall) { deferredInstall.prompt(); try { await deferredInstall.userChoice; } catch (e) {} deferredInstall = null; render(); } else installHelp(); },
+  'install-app': async () => { if (deferredInstall && !isAndroidOther()) { deferredInstall.prompt(); try { await deferredInstall.userChoice; } catch (e) {} deferredInstall = null; render(); } else installHelp(); },
   'dismiss-install': () => { S.settings.installDismissed = true; save(); render(); },
   'feedback': () => openFeedback()
 });
