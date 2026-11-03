@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Méditons Ensemble · Pray and Move a déménagé</title><meta name="robots" content="noindex"><meta name="theme-color" content="#000000">
+<link rel="icon" href="icons/icon-192.png"><link rel="apple-touch-icon" href="icons/apple-touch-icon.png"><link rel="manifest" href="manifest.webmanifest">
+<style>
+:root{--gold:#E8B52C;--gold-l:#F7D46A;--t:#EEF2FB;--m:#B7C1DA}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--t);background:radial-gradient(ellipse at top,#0A1230 0%,#000000 75%);display:flex;justify-content:center;padding:28px 16px 40px}
+main{max-width:560px;width:100%;text-align:center}img.logo{width:96px;height:96px;border-radius:24px;box-shadow:0 10px 30px rgba(0,0,0,.4)}
+h1{font-family:Georgia,serif;font-size:28px;margin:18px 0 6px}.lead{color:var(--m);line-height:1.6;margin:0 0 22px}
+.addr{display:inline-block;background:rgba(232,181,44,.12);border:1px solid rgba(232,181,44,.45);color:var(--gold-l);padding:8px 14px;border-radius:12px;font-weight:600;word-break:break-all}
+.card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:18px;padding:20px;margin:18px 0;text-align:left}
+.card h2{font-size:17px;margin:0 0 10px}.card p,.card li{color:var(--m);line-height:1.6;font-size:14.5px}.card ol{padding-left:20px;margin:6px 0 0}
+.btn{display:block;width:100%;border:0;border-radius:14px;padding:15px 18px;font:inherit;font-size:16px;font-weight:700;cursor:pointer;text-decoration:none;text-align:center;margin-top:12px}
+.b1{background:linear-gradient(180deg,var(--gold-l),var(--gold));color:#0A1230}.b2{background:transparent;color:var(--t);border:1px solid rgba(255,255,255,.3)}
+.st{min-height:1.4em;color:var(--gold-l);font-size:14px;margin-top:10px}.en{font-size:12.5px;opacity:.75}
+.lang{position:absolute;top:14px;right:14px}.lang button{background:none;border:1px solid rgba(255,255,255,.3);color:var(--t);border-radius:999px;padding:6px 12px;font-weight:700;cursor:pointer}
+</style></head><body><div class="lang"><button id="lg">EN</button></div><main>
+<img class="logo" src="icons/icon-192.png" alt="">
+<h1 data-fr="Méditons Ensemble · Pray and Move a déménagé" data-en="Méditons Ensemble · Pray and Move has moved">Méditons Ensemble · Pray and Move a déménagé</h1>
+<p class="lead" data-fr="L’application a une nouvelle adresse. Elle reste gratuite et identique, avec en plus les comptes pour retrouver tes méditations sur ton téléphone et ton ordinateur." data-en="The app has a new address. It is still free and the same, now with accounts to find your meditations on your phone and computer.">L’application a une nouvelle adresse.</p>
+<div class="addr">prayandmove.github.io/pray-and-move-meditons</div>
+<div class="card"><h2 data-fr="1. Emporte tes données" data-en="1. Take your data with you">1. Emporte tes données</h2>
+<p id="info"></p>
+<button class="btn b1" id="go" data-fr="Emporter mes données et ouvrir la nouvelle adresse" data-en="Take my data and open the new address">Emporter mes données et ouvrir la nouvelle adresse</button>
+<button class="btn b2" id="dl" data-fr="Plan B : télécharger une sauvegarde" data-en="Plan B: download a backup">Plan B : télécharger une sauvegarde</button>
+<div class="st" id="st"></div>
+<p class="en" data-fr="Plan B : à la nouvelle adresse, va dans Paramètres › Sauvegarde › Importer et choisis le fichier téléchargé." data-en="Plan B: at the new address, go to Settings › Backup › Import and choose the downloaded file.">Plan B : à la nouvelle adresse, va dans Paramètres › Sauvegarde › Importer et choisis le fichier téléchargé.</p></div>
+<div class="card"><h2 data-fr="2. Réinstalle l’application" data-en="2. Reinstall the app">2. Réinstalle l’application</h2><ol>
+<li data-fr="Supprime l’ancienne icône de ton écran d’accueil (ou de ton ordinateur)." data-en="Remove the old icon from your home screen (or computer).">Supprime l’ancienne icône.</li>
+<li data-fr="À la nouvelle adresse, clique sur « Installer l’application » (Paramètres › Application)." data-en="At the new address, tap “Install the app” (Settings › App).">À la nouvelle adresse, installe l’app.</li>
+<li data-fr="Crée ton compte dans « Mon compte » : tes données seront aussi sur tes autres appareils." data-en="Create your account in “My account”: your data will also be on your other devices.">Crée ton compte.</li></ol></div>
+<a class="btn b2" href="https://prayandmove.github.io/pray-and-move-meditons/" id="open" data-fr="Ouvrir la nouvelle adresse sans données" data-en="Open the new address without data">Ouvrir la nouvelle adresse sans données</a>
+</main>
+<script>
+'use strict';
+var NEW = 'https://prayandmove.github.io/pray-and-move-meditons/', KEY = 'pamg_meditons_v1', PHOTO_DB = 'pamg_photos', NEW_ORIGIN = new URL(NEW).origin;
+var lang = (navigator.language || 'fr').slice(0, 2) === 'en' ? 'en' : 'fr';
+var state = null; try { state = localStorage.getItem(KEY); } catch (e) {}
+var nMed = 0; try { nMed = (JSON.parse(state || '{}').meditations || []).length; } catch (e) {}
+function T(fr, en) { return lang === 'en' ? en : fr; }
+function apply() {
+  document.documentElement.lang = lang; document.getElementById('lg').textContent = lang === 'en' ? 'FR' : 'EN';
+  [].forEach.call(document.querySelectorAll('[data-fr]'), function (el) { el.textContent = el.getAttribute('data-' + lang); });
+  document.getElementById('info').textContent = state ? T(nMed + ' méditation(s) et tous tes réglages se trouvent dans ce navigateur. Un clic suffit pour les emporter.', nMed + ' meditation(s) and all your settings are in this browser. One click takes them with you.')
+    : T('Aucune donnée trouvée dans ce navigateur : tu peux ouvrir directement la nouvelle adresse.', 'No data found in this browser: you can open the new address directly.');
+  if (!state) { document.getElementById('go').style.display = 'none'; document.getElementById('dl').style.display = 'none'; }
+}
+document.getElementById('lg').onclick = function () { lang = lang === 'en' ? 'fr' : 'en'; apply(); };
+apply();
+function photos() {
+  return new Promise(function (res) {
+    try { var rq = indexedDB.open(PHOTO_DB, 1);
+      rq.onupgradeneeded = function () { rq.result.createObjectStore('photos', {keyPath: 'id'}); };
+      rq.onsuccess = function () { try { var r = rq.result.transaction('photos', 'readonly').objectStore('photos').getAll(); r.onsuccess = function () { res(r.result || []); }; r.onerror = function () { res([]); }; } catch (e) { res([]); } };
+      rq.onerror = function () { res([]); };
+    } catch (e) { res([]); }
+  });
+}
+function gz(str) {
+  var bytes = new TextEncoder().encode(str);
+  var b64 = function (u8) { var s = ''; for (var i = 0; i < u8.length; i += 32768) s += String.fromCharCode.apply(null, u8.subarray(i, i + 32768)); return btoa(s).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, ''); };
+  if (!window.CompressionStream) return Promise.resolve(b64(bytes));
+  return new Response(new Blob([bytes]).stream().pipeThrough(new CompressionStream('gzip'))).arrayBuffer().then(function (b) { return b64(new Uint8Array(b)); });
+}
+var st = document.getElementById('st');
+document.getElementById('go').onclick = function () {
+  st.textContent = T('Préparation…', 'Preparing…');
+  // la fenêtre doit s’ouvrir tout de suite (sinon le navigateur la bloque)
+  var w = window.open('', '_blank');
+  Promise.all([gz(state), photos()]).then(function (r) {
+    var hash = r[0].length < 1500000 ? '#import=' + r[0] : '#demenagement', ph = r[1];
+    window.addEventListener('message', function (ev) {
+      if (ev.origin !== NEW_ORIGIN || !ev.data || ev.data.type !== 'med-migrate-ready') return;
+      ev.source.postMessage({type: 'med-migrate-data', state: state, photos: ph}, NEW_ORIGIN);
+      st.textContent = T('Données envoyées ✔ Continue dans la nouvelle fenêtre.', 'Data sent ✔ Continue in the new window.');
+    });
+    if (w) { w.location = NEW + hash; st.textContent = T('Nouvelle adresse ouverte : accepte l’import là-bas.', 'New address opened: accept the import there.'); }
+    else location.href = NEW + hash; // fenêtres bloquées (app installée sur iPhone…)
+  });
+};
+document.getElementById('dl').onclick = function () {
+  var a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([state], {type: 'application/json'}));
+  a.download = 'sauvegarde-meditons-' + new Date().toISOString().slice(0, 10) + '.json'; document.body.appendChild(a); a.click();
+  st.textContent = T('Sauvegarde téléchargée.', 'Backup downloaded.');
+};
+if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(function () {});
+</script></body></html>
